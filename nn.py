@@ -54,6 +54,12 @@ def predict(inputs):
 
   print("Prediction: ", word[index], "\n")
 
+def plot():
+  plt.scatter([synapticWeights], inputs, alpha=0.5)
+  plt.title('My Model')
+  plt.xlabel('Weights')
+  plt.ylabel('Inputs')
+  plt.show()
 
 def save():
   np.save("weights.npy", synapticWeights)
@@ -103,20 +109,17 @@ train(trainingInputs, trainingOutputs, 100000)
 
 save()
 
-inputs = [1, 0, 0, 0, \
+inputs = [1, 1, 0, 0, \
          0, 0, 1, 0, \
          0, 0, 1, 0, \
          0, 0, 0, 1]
 predict(inputs)
 
 
+plot()
 
-# Plot
-plt.scatter([synapticWeights], inputs, alpha=0.5)
-plt.title('My Model')
-plt.xlabel('Weights')
-plt.ylabel('Inputs')
-plt.show()
+
+
 
 
 
