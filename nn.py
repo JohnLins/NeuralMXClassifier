@@ -1,5 +1,5 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 
 np.random.seed(1)
@@ -103,10 +103,32 @@ train(trainingInputs, trainingOutputs, 100000)
 
 save()
 
-predict([1, 0, 0, 0, \
+inputs = [1, 0, 0, 0, \
          0, 0, 1, 0, \
          0, 0, 1, 0, \
-         0, 0, 0, 1])
+         0, 0, 0, 1]
+predict(inputs)
+
+
+
+# Plot
+plt.scatter([synapticWeights], inputs, alpha=0.5)
+plt.title('My Model')
+plt.xlabel('Weights')
+plt.ylabel('Inputs')
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
