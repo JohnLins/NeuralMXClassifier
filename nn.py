@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from termcolor import colored
 
 
 np.random.seed(1)
@@ -39,9 +40,10 @@ def predict(inputs):
 
 
  
-  print("Output Data: ", output, "\n")
+  print("Output Data: ",colored(( output), 'green'), "\n")
 
-  print("Differences: ", y, "\n")
+
+  print("Differences: ", colored((y), 'blue'))
 
   smallest = y[0]
   index = 0
@@ -52,7 +54,7 @@ def predict(inputs):
 
   print("Smallest Difference: ", smallest, "\n")
 
-  print("Prediction: ", word[index], "\n")
+  print("Prediction: ", colored((word[index]), 'green'), "\n")
 
 def plot():
   plt.scatter([synapticWeights], inputs, alpha=0.5)
