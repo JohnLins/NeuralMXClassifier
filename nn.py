@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from termcolor import colored
-
+from data import trainingInputs, trainingOutputs
 
 np.random.seed(1)
 
@@ -36,14 +36,16 @@ def train(trainingInputs, trainingOutputs, trainingIterations):
 def predict(inputs):
   output = neuron(np.array(inputs))
   y = np.array([abs(0.1 - output[0]), abs(0.2 - output[0]), abs(0.3 - output[0]), abs(0.4 - output[0])])
-  word = np.array(["bottom-top (0.1)", "Top-bottom (0.2)", "Right Line(0.3)", "Left Line(0.4)"])
+  key = np.array(["bottom-top (0.1)", "Top-bottom (0.2)", "Right Line(0.3)", "Left Line(0.4)"])
 
 
- 
-  print("Output Data: ",colored(( output), 'green'), "\n")
+  
+  print("Output Data: ", colored(( output), 'green'), "\n")
 
-
-  print("Differences: ", colored((y), 'blue'))
+  sortedOut = y.argsort()
+  print("    Differences: ", colored((y[sortedOut]), 'blue'))
+  print("Ordered Outputs: ", colored((key[sortedOut]), 'blue'))
+  #np.sort(y)
 
   smallest = y[0]
   index = 0
@@ -54,7 +56,7 @@ def predict(inputs):
 
   print("Smallest Difference: ", smallest, "\n")
 
-  print("Prediction: ", colored((word[index]), 'green'), "\n")
+  print("Prediction: ", colored((key[index]), 'green'), "\n")
 
 def plot():
   plt.scatter([synapticWeights], inputs, alpha=0.5)
@@ -77,44 +79,17 @@ def load():
 #RUN
 
 
-trainingInputs = np.array([[0, 0, 0, 1, \
-                            0, 0, 1, 0, \
-                            0, 1, 0, 0, \
-                            1, 0, 0, 0],
 
-                            [1, 0, 0, 0, \
-                             0, 1, 0, 0, \
-                             0, 0, 1, 0, \
-                             0, 0, 0, 1],
-
-                            [0, 0, 0, 1, \
-                             0, 0, 0, 1, \
-                             0, 0, 0, 1, \
-                             0, 0, 0, 1],
-
-                            [1, 0, 0, 0, \
-                             1, 0, 0, 0, \
-                             1, 0, 0, 0, \
-                             1, 0, 0, 0],
-                            
-                             [1, 0, 0, 0,\
-                             1, 0, 0, 0, \
-                             0, 0, 1, 0, \
-                             0, 0, 0, 1]])
-
-                             
-
-trainingOutputs = np.array([[0.1,0.2,0.3,0.4,0.2]]).T
-
+#Data from data.py
 train(trainingInputs, trainingOutputs, 100000)
 #load()
 
 save()
 
-inputs = [1, 1, 0, 0, \
-         0, 0, 1, 0, \
-         0, 0, 1, 0, \
-         0, 0, 0, 1]
+inputs = [0, 0, 0, 1, \
+          0, 0, 0, 1, \
+          0, 0, 0, 1, \
+          0, 0, 0, 1]
 predict(inputs)
 
 
