@@ -1,11 +1,13 @@
 import numpy as np
 
-e = np.exp(1)
+
 
 np.random.seed(1)
 
-synapticWeights = 2 * np.random.random((3, 1)) - 1
+#                                       _ number of elements in input
+synapticWeights = 2 * np.random.random((16, 1)) - 1
 
+e = np.exp(1)
 def softplus(x):
     return np.log(1+((e)**x))
  
@@ -26,41 +28,97 @@ def train(trainingInputs, trainingOutputs, trainingIterations):
         error = trainingOutputs - output
         
         adjustments = np.dot(trainingInputs.T, error * softplusDerivative(output))
-
+        
         synapticWeights += adjustments
 
 
-print("Random starting weights: ")
-print(synapticWeights)
+def predict(inputs):
+  output = neuron(np.array(inputs))
+  y = np.array([abs(0.1 - output[0]), abs(0.2 - output[0]), abs(0.3 - output[0]), abs(0.4 - output[0])])
+  word = np.array(["bottom-top (0.1)", "Top-bottom (0.2)", "Right Line(0.3)", "Left Line(0.4)"])
 
 
-trainingInputs = np.array([[0.1,0.5,0.5],
-                            [0.5,0.5,0.5],
-                            [0.5,0.1,0.5],
-                            [0.1,0.5,0.5]])
+ 
+  print("Output Data: ", output, "\n")
 
-trainingOutputs = np.array([[0.1,0.5,0.5,0.1]]).T
+  print("Differences: ", y, "\n")
 
-  
-train(trainingInputs, trainingOutputs, 1000)
+  smallest = y[0]
+  index = 0
+  for i in range(len(y)):
+    if y[i] < smallest:
+      smallest = min(smallest, y[i])
+      index = i
 
+  print("Smallest Difference: ", smallest, "\n")
 
-
-#LET'S RUN IT!
-
-print("Weights after training: ")
-print(synapticWeights)
-print("-------------------")
+  print("Prediction: ", word[index], "\n")
 
 
-inputs = [0.5,0.1,0.5]
-output = neuron(np.array(inputs))
+def save():
+  np.save("weights.npy", synapticWeights)
 
-#if output/0.5 < output/0.1:
+def load():
+  global synapticWeights
+  synapticWeights = np.load("weights.npy")
 
-    
-#print("Input data = ", input1, input2, input3)
-#print("-------------------")
-print("Output data: ")
-print(output)
+
+
+
+
+#RUN
+
+
+trainingInputs = np.array([[0, 0, 0, 1, \
+                            0, 0, 1, 0, \
+                            0, 1, 0, 0, \
+                            1, 0, 0, 0],
+
+                            [1, 0, 0, 0, \
+                             0, 1, 0, 0, \
+                             0, 0, 1, 0, \
+                             0, 0, 0, 1],
+
+                            [0, 0, 0, 1, \
+                             0, 0, 0, 1, \
+                             0, 0, 0, 1, \
+                             0, 0, 0, 1],
+
+                            [1, 0, 0, 0, \
+                             1, 0, 0, 0, \
+                             1, 0, 0, 0, \
+                             1, 0, 0, 0],
+                            
+                             [1, 0, 0, 0,\
+                             1, 0, 0, 0, \
+                             0, 0, 1, 0, \
+                             0, 0, 0, 1]])
+
+                             
+
+trainingOutputs = np.array([[0.1,0.2,0.3,0.4,0.2]]).T
+
+train(trainingInputs, trainingOutputs, 100000)
+#load()
+
+save()
+
+predict([1, 0, 0, 0, \
+         0, 0, 1, 0, \
+         0, 0, 1, 0, \
+         0, 0, 0, 1])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
