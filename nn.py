@@ -60,6 +60,8 @@ def predict(inputs):
 
 def plot():
   plt.scatter([synapticWeights], inputs, alpha=0.5)
+  plt.plot(np.arange(-2,2), softplus(np.arange(-2,2)))
+  plt.plot(np.arange(-2,2), softplusDerivative(np.arange(-2,2)))
   plt.title('My Model')
   plt.xlabel('Weights')
   plt.ylabel('Inputs')
@@ -86,9 +88,9 @@ train(trainingInputs, trainingOutputs, 100000)
 
 save()
 
-inputs = [0, 0, 0, 1, \
-          0, 0, 0, 1, \
-          0, 0, 0, 1, \
+inputs = [1, 0, 0, 0, \
+          0, 0, 0, 0, \
+          0, 0, 1, 0, \
           0, 0, 0, 1]
 predict(inputs)
 
